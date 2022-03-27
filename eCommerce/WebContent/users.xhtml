@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Sign Up</title>
+	<h:outputStylesheet library="css" name="table-style.css"></h:outputStylesheet>
+</h:head>
+<h:body>
+<ui:composition template="/resources/template/layout.xhtml">
+		<ui:define name="content">
+			<h:form id="formCreateUser">
+				
+				<h:panelGroup id="panelUser">
+					
+					<h:panelGrid columns="3" cellspacing="0" cellpadding="8">
+						<h:outputLabel value="Id : " style="color:blue"></h:outputLabel>
+						<h:inputText id="ident" value="#{userBean.id}" disabled="true"
+									readonly="true" style="color:blue">
+						</h:inputText>
+						<h:outputText></h:outputText>
+						
+						<h:outputLabel value="Nom : "></h:outputLabel>
+						<h:inputText id="Nom" value="#{userBean.lastName}" required="true" requiredMessage="Le Nom est obligatoire (entre 2 et 20 caractères) !">
+							<f:validateLength minimum="2" maximum="20" />
+						</h:inputText>
+						<h:message for="Nom" style="color:red"></h:message>
+		
+						<h:outputLabel value="Prénom : "></h:outputLabel>
+						<h:inputText id="Prénom" value="#{userBean.firstName}" required="true" requiredMessage="Le Prénom est obligatoire (entre 2 et 20 caractères) !">
+							<f:validateLength minimum="2" maximum="20" />
+						</h:inputText>
+						<h:message for="Prénom" style="color:red"></h:message>
+						
+						<h:outputLabel value="Date de naissance : "></h:outputLabel>
+						<h:inputText id="birthday" value="#{userBean.birthday}"
+									required="true" requiredMessage="La date de naissance est obligatoire !"
+									validatorMessage="Date de naissance incorrecte ! Elle doit être au format jj/mm/aaaa">
+							<f:validateRegex pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$"></f:validateRegex>
+		<!-- 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> il faut mettre dateNaissance en type Date dans le userBean -->
+						</h:inputText>
+						<h:message for="birthday" style="color:red"></h:message>
+		
+						<h:outputLabel value="Telephone : "></h:outputLabel>
+						<h:inputText id="Telephone" value="#{userBean.phone}" required="true" requiredMessage="Le numéro est obligatoire !">
+							<f:validateLength minimum="10" maximum="10" />
+						</h:inputText>
+						<h:message for="Telephone" style="color:red"></h:message>
+		
+						<h:outputLabel value="Email : "></h:outputLabel>
+						<h:inputText id="email" value="#{userBean.email}" required="true" requiredMessage="L'email est obligatoire (entre 6 et 20 caractères) !"
+									validatorMessage="Le format de l'Email est incorrect !">
+							<f:validateLength minimum="6" maximum="30" />
+							<f:validateRegex pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></f:validateRegex>
+						</h:inputText>
+						<h:message for="email" style="color:red"></h:message>
+						
+						<h:outputLabel value="Mot de passe : "></h:outputLabel>
+						<h:inputSecret id="password" value="#{userBean.password}"
+									required="true" requiredMessage="Le Mot de passe est obligatoire !">
+							<f:validateLength minimum="3" maximum="20" />
+						</h:inputSecret>
+						<h:message for="password" style="color:red"></h:message>
+						
+						<h:outputLabel value="Mot de passe (confirmation) : "></h:outputLabel>
+						<h:inputSecret id="passwordConf" value="#{userBean.passwordConf}"
+									required="true" requiredMessage="Le Mot de passe de confirmation est obligatoire !">
+							<f:validateLength minimum="3" maximum="20" />
+						</h:inputSecret>
+						<h:message for="passwordConf" style="color:red"></h:message>
+						
+					</h:panelGrid>
+					
+				</h:panelGroup>
+				
+				<h:panelGroup id="panelMessages">
+					<h:panelGrid columns="1" cellspacing="0" cellpadding="0">
+						<h:outputText value="#{userBean.messageSuccess}" style="color:green"></h:outputText>
+						<h:outputText value="#{userBean.messageError}" style="color:red"></h:outputText>
+					</h:panelGrid>
+				</h:panelGroup>
+		
+				<h:panelGroup id="panelButtons">
+					<h:panelGrid columns="3" cellspacing="0" cellpadding="8">
+						<h:commandButton id="addUser" value="Ajouter utilisateur" action="#{userBean.ajouter()}"></h:commandButton>
+					</h:panelGrid>
+				</h:panelGroup>
+				
+			</h:form>
+			
+			<h:form id="formButtons">
+				<h:panelGroup id="panelButtons">
+					<h:panelGrid columns="3" cellspacing="0" cellpadding="8">
+						<h:commandButton id="raz" value="Réinitialiser" action="#{userBean.initialiser()}"></h:commandButton>
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+			
+			<h:form id="formListUsers">
+				<h4>Liste des utilisateurs</h4>
+				<h:dataTable value="#{userBean.getUsers()}" var="u"
+								styleClass="order-table" headerClass="order-table-header"
+								rowClasses="order-table-odd-row, order-table-even-row" >
+								
+					<h:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{u.id}"></h:outputText>
+					</h:column>
+				
+					<h:column>
+						<f:facet name="header">Nom</f:facet>
+						<h:outputText value="#{u.lastName}"></h:outputText>
+					</h:column>
+				
+					<h:column>
+						<f:facet name="header">Prénom</f:facet>
+						<h:outputText value="#{u.firstName}"></h:outputText>
+					</h:column>
+				
+					<h:column>
+						<f:facet name="header">Date de Naissance</f:facet>
+						<h:outputText value="#{u.birthday}"></h:outputText>
+					</h:column>
+				
+					<h:column>
+						<f:facet name="header">Email</f:facet>
+						<h:outputText value="#{u.email}"></h:outputText>
+					</h:column>
+				
+					<h:column>
+						<f:facet name="header">Password</f:facet>
+						<h:outputText value="#{u.password}"></h:outputText>
+					</h:column>
+				
+					<h:column>
+						<f:facet name="header">Phone</f:facet>
+						<h:outputText value="#{u.phone}"></h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Action</f:facet>
+						<h:outputText value="Supprimer"></h:outputText>
+					</h:column>
+				
+				</h:dataTable>
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="eCommerce"
+		transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+
+		<class>fr.doranco.ecommerce.entity.pojo.Address</class>
+		<class>fr.doranco.ecommerce.entity.pojo.Cart</class>
+		<class>fr.doranco.ecommerce.entity.pojo.Category</class>
+		<class>fr.doranco.ecommerce.entity.pojo.Comment</class>
+		<class>fr.doranco.ecommerce.entity.pojo.Order</class>
+		<class>fr.doranco.ecommerce.entity.pojo.OrderLine</class>
+		<class>fr.doranco.ecommerce.entity.pojo.PaymentCard</class>
+		<class>fr.doranco.ecommerce.entity.pojo.Product</class>
+		<class>fr.doranco.ecommerce.entity.pojo.Settings</class>
+		<class>fr.doranco.ecommerce.entity.pojo.User</class>
+
+		<properties>
+
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.cj.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/ecommerce_db" />
+			<property name="javax.persistence.jdbc.user" value="space" />
+			<property name="javax.persistence.jdbc.password"
+				value="admin" />
+			<property
+				name="javax.persistence.shema-generation.database.action"
+				value="drop-and-create" />
+
+		</properties>
+
+	</persistence-unit>
+</persistence>
